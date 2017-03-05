@@ -1,12 +1,3 @@
-###########################################
-# Suppress matplotlib user warnings
-# Necessary for newer version of matplotlib
-import warnings
-
-warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")
-
-###########################################
-
 import matplotlib.pyplot as pl
 import numpy as np
 from sklearn.model_selection import learning_curve, validation_curve
@@ -100,6 +91,26 @@ def ModelComplexity(X, y):
     pl.xlabel('Maximum Depth')
     pl.ylabel('Score')
     pl.ylim([-0.05, 1.05])
+    pl.show()
+
+
+def ErrorFigure(y_prediction, y_test):
+    # 误差计算
+    allError = []
+    for i in range(0, len(y_test)):
+        error = list(y_test)[i] - list(y_prediction)[i]
+        allError.append(error)
+        # print("The error for {}'s home: ${:,.2f}".format(i, error))
+    # 创建一幅图
+    pl.figure(figsize=(15, 7))
+    # 画出曲线
+    pl.plot(range(1, 99), y_prediction, color='r', label='y_prediction')
+    pl.plot(range(1, 99), y_test, color='g', label='y_test')
+    pl.bar(range(1, 99), allError, alpha=.5, color='b', label='error')
+    pl.legend(loc='upper right')
+    pl.xlabel('Number')
+    pl.ylabel('Price')
+    # 显示
     pl.show()
 
 
